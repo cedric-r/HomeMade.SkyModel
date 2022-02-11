@@ -27,12 +27,12 @@ namespace Utils
             Random rnd = new Random();
 
             // Generate the coordinates in 2 stages to separate the hemispheres and avoid a bit of travel
-            for (int i = 0; i < sample; i++)
+            for (int i = 0; i < sample/2; i++)
             {
                 temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(0, 180) });
             }
 
-            for (int i = 0; i < sample; i++)
+            for (int i = 0; i < sample/2; i++)
             {
                 temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(181, 360) });
             }

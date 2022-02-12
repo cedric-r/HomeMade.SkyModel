@@ -26,15 +26,25 @@ namespace Utils
             List<AltAzCoordinates> temp = new List<AltAzCoordinates>();
             Random rnd = new Random();
 
-            // Generate the coordinates in 2 stages to separate the hemispheres and avoid a bit of travel
-            for (int i = 0; i < sample/2; i++)
+            // Generate the coordinates in 2 stages to separate the hemispheres into quadrants and avoid a bit of travel
+            for (int i = 0; i < sample/4; i++)
             {
-                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(0, 180) });
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(0, 90) });
             }
 
-            for (int i = 0; i < sample/2; i++)
+            for (int i = 0; i < sample / 4; i++)
             {
-                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(181, 360) });
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(91, 180) });
+            }
+
+            for (int i = 0; i < sample/4; i++)
+            {
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(181, 270) });
+            }
+
+            for (int i = 0; i < sample / 4; i++)
+            {
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(271, 360) });
             }
 
             return temp;

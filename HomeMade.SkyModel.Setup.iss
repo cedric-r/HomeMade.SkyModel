@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HomeMade.SkyModel"
-#define MyAppVersion "0.0.2"
+#define MyAppVersion "0.0.4"
 #define MyAppPublisher "Cedric Raguenaud"
 #define MyAppURL "https://github.com/cedric-r/HomeMade.SkyModel"
 #define MyAppExeName "HomeMadeSkyModel.exe"

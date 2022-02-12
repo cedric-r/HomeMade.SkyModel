@@ -90,11 +90,16 @@ namespace HomeMadeSkyModel
             }
             try
             {
-                Int32.Parse(numberOfPointTextBox.Text);
+                int a = Int32.Parse(numberOfPointTextBox.Text);
+                if (a <4)
+                {
+                    MessageBox.Show("Invalid number of points. Minimum is 4.");
+                    return;
+                }
             }
             catch (Exception e3)
             {
-                MessageBox.Show("Invalid number of points");
+                MessageBox.Show("Invalid number of points.");
                 return;
             }
             try
@@ -205,6 +210,7 @@ namespace HomeMadeSkyModel
                 {
                     logTextBox.AppendText(message + "\r\n");
                 }
+                progressBar.Value = (int)SearchProcess.Progress;
             }
         }
 

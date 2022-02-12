@@ -31,8 +31,22 @@ namespace HomeMadeSkyModel
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.logTextBox = new System.Windows.Forms.TextBox();
+            this.astapPathTextBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.gainTextBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.binningTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.exposureTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cameraName = new System.Windows.Forms.Label();
+            this.telescopeName = new System.Windows.Forms.Label();
+            this.cameraButton = new System.Windows.Forms.Button();
+            this.actionLabel = new System.Windows.Forms.Label();
             this.userLongitudeTextBox = new System.Windows.Forms.TextBox();
+            this.stopButton = new System.Windows.Forms.Button();
+            this.telescopeButton = new System.Windows.Forms.Button();
+            this.logTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.userLatitudeTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,27 +58,15 @@ namespace HomeMadeSkyModel
             this.label2 = new System.Windows.Forms.Label();
             this.numberOfPointTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.actionLabel = new System.Windows.Forms.Label();
+            this.generateButton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button4 = new System.Windows.Forms.Button();
-            this.telescopeName = new System.Windows.Forms.Label();
-            this.cameraName = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.exposureTextBox = new System.Windows.Forms.TextBox();
-            this.binningTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.gainTextBox = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.astapPathTextBox = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.progressBar);
             this.panel1.Controls.Add(this.astapPathTextBox);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.gainTextBox);
@@ -75,11 +77,11 @@ namespace HomeMadeSkyModel
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.cameraName);
             this.panel1.Controls.Add(this.telescopeName);
-            this.panel1.Controls.Add(this.button4);
+            this.panel1.Controls.Add(this.cameraButton);
             this.panel1.Controls.Add(this.actionLabel);
             this.panel1.Controls.Add(this.userLongitudeTextBox);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.stopButton);
+            this.panel1.Controls.Add(this.telescopeButton);
             this.panel1.Controls.Add(this.logTextBox);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.userLatitudeTextBox);
@@ -92,11 +94,147 @@ namespace HomeMadeSkyModel
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.numberOfPointTextBox);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.generateButton);
             this.panel1.Location = new System.Drawing.Point(3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(421, 366);
+            this.panel1.Size = new System.Drawing.Size(421, 396);
             this.panel1.TabIndex = 0;
+            // 
+            // astapPathTextBox
+            // 
+            this.astapPathTextBox.Location = new System.Drawing.Point(98, 136);
+            this.astapPathTextBox.Name = "astapPathTextBox";
+            this.astapPathTextBox.Size = new System.Drawing.Size(296, 20);
+            this.astapPathTextBox.TabIndex = 29;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(13, 139);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(82, 13);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Path to ASTAP:";
+            // 
+            // gainTextBox
+            // 
+            this.gainTextBox.Location = new System.Drawing.Point(351, 113);
+            this.gainTextBox.Name = "gainTextBox";
+            this.gainTextBox.Size = new System.Drawing.Size(43, 20);
+            this.gainTextBox.TabIndex = 27;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(313, 116);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Gain:";
+            // 
+            // binningTextBox
+            // 
+            this.binningTextBox.Location = new System.Drawing.Point(224, 110);
+            this.binningTextBox.Name = "binningTextBox";
+            this.binningTextBox.Size = new System.Drawing.Size(43, 20);
+            this.binningTextBox.TabIndex = 25;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(173, 113);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(45, 13);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "Binning:";
+            // 
+            // exposureTextBox
+            // 
+            this.exposureTextBox.Location = new System.Drawing.Point(79, 110);
+            this.exposureTextBox.Name = "exposureTextBox";
+            this.exposureTextBox.Size = new System.Drawing.Size(43, 20);
+            this.exposureTextBox.TabIndex = 23;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(13, 113);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(68, 13);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Exposure (s):";
+            // 
+            // cameraName
+            // 
+            this.cameraName.AutoSize = true;
+            this.cameraName.Location = new System.Drawing.Point(95, 83);
+            this.cameraName.Name = "cameraName";
+            this.cameraName.Size = new System.Drawing.Size(43, 13);
+            this.cameraName.TabIndex = 21;
+            this.cameraName.Text = "Camera";
+            this.cameraName.Visible = false;
+            // 
+            // telescopeName
+            // 
+            this.telescopeName.AutoSize = true;
+            this.telescopeName.Location = new System.Drawing.Point(95, 54);
+            this.telescopeName.Name = "telescopeName";
+            this.telescopeName.Size = new System.Drawing.Size(57, 13);
+            this.telescopeName.TabIndex = 20;
+            this.telescopeName.Text = "Telescope";
+            this.telescopeName.Visible = false;
+            // 
+            // cameraButton
+            // 
+            this.cameraButton.Location = new System.Drawing.Point(14, 78);
+            this.cameraButton.Name = "cameraButton";
+            this.cameraButton.Size = new System.Drawing.Size(75, 23);
+            this.cameraButton.TabIndex = 19;
+            this.cameraButton.Text = "Camera";
+            this.cameraButton.UseVisualStyleBackColor = true;
+            this.cameraButton.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // actionLabel
+            // 
+            this.actionLabel.AutoSize = true;
+            this.actionLabel.ForeColor = System.Drawing.Color.Coral;
+            this.actionLabel.Location = new System.Drawing.Point(300, 221);
+            this.actionLabel.Name = "actionLabel";
+            this.actionLabel.Size = new System.Drawing.Size(42, 13);
+            this.actionLabel.TabIndex = 18;
+            this.actionLabel.Text = "Moving";
+            this.actionLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.actionLabel.Visible = false;
+            // 
+            // userLongitudeTextBox
+            // 
+            this.userLongitudeTextBox.Enabled = false;
+            this.userLongitudeTextBox.Location = new System.Drawing.Point(294, 191);
+            this.userLongitudeTextBox.Name = "userLongitudeTextBox";
+            this.userLongitudeTextBox.Size = new System.Drawing.Size(100, 20);
+            this.userLongitudeTextBox.TabIndex = 14;
+            // 
+            // stopButton
+            // 
+            this.stopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stopButton.ForeColor = System.Drawing.Color.Red;
+            this.stopButton.Location = new System.Drawing.Point(104, 162);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(75, 23);
+            this.stopButton.TabIndex = 17;
+            this.stopButton.Text = "STOP";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // telescopeButton
+            // 
+            this.telescopeButton.Location = new System.Drawing.Point(14, 49);
+            this.telescopeButton.Name = "telescopeButton";
+            this.telescopeButton.Size = new System.Drawing.Size(75, 23);
+            this.telescopeButton.TabIndex = 16;
+            this.telescopeButton.Text = "Telescope";
+            this.telescopeButton.UseVisualStyleBackColor = true;
+            this.telescopeButton.Click += new System.EventHandler(this.button2_Click);
             // 
             // logTextBox
             // 
@@ -106,14 +244,6 @@ namespace HomeMadeSkyModel
             this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.logTextBox.Size = new System.Drawing.Size(397, 119);
             this.logTextBox.TabIndex = 15;
-            // 
-            // userLongitudeTextBox
-            // 
-            this.userLongitudeTextBox.Enabled = false;
-            this.userLongitudeTextBox.Location = new System.Drawing.Point(294, 191);
-            this.userLongitudeTextBox.Name = "userLongitudeTextBox";
-            this.userLongitudeTextBox.Size = new System.Drawing.Size(100, 20);
-            this.userLongitudeTextBox.TabIndex = 14;
             // 
             // label6
             // 
@@ -207,154 +337,33 @@ namespace HomeMadeSkyModel
             this.label1.TabIndex = 1;
             this.label1.Text = "Number of points:";
             // 
-            // button1
+            // generateButton
             // 
-            this.button1.Location = new System.Drawing.Point(14, 162);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Generate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(14, 49);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Telescope";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(104, 162);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "STOP";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // actionLabel
-            // 
-            this.actionLabel.AutoSize = true;
-            this.actionLabel.ForeColor = System.Drawing.Color.Coral;
-            this.actionLabel.Location = new System.Drawing.Point(300, 221);
-            this.actionLabel.Name = "actionLabel";
-            this.actionLabel.Size = new System.Drawing.Size(42, 13);
-            this.actionLabel.TabIndex = 18;
-            this.actionLabel.Text = "Moving";
-            this.actionLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.actionLabel.Visible = false;
+            this.generateButton.Location = new System.Drawing.Point(14, 162);
+            this.generateButton.Name = "generateButton";
+            this.generateButton.Size = new System.Drawing.Size(75, 23);
+            this.generateButton.TabIndex = 0;
+            this.generateButton.Text = "Generate";
+            this.generateButton.UseVisualStyleBackColor = true;
+            this.generateButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button4
+            // progressBar
             // 
-            this.button4.Location = new System.Drawing.Point(14, 78);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 19;
-            this.button4.Text = "Camera";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // telescopeName
-            // 
-            this.telescopeName.AutoSize = true;
-            this.telescopeName.Location = new System.Drawing.Point(95, 54);
-            this.telescopeName.Name = "telescopeName";
-            this.telescopeName.Size = new System.Drawing.Size(57, 13);
-            this.telescopeName.TabIndex = 20;
-            this.telescopeName.Text = "Telescope";
-            this.telescopeName.Visible = false;
-            // 
-            // cameraName
-            // 
-            this.cameraName.AutoSize = true;
-            this.cameraName.Location = new System.Drawing.Point(95, 83);
-            this.cameraName.Name = "cameraName";
-            this.cameraName.Size = new System.Drawing.Size(43, 13);
-            this.cameraName.TabIndex = 21;
-            this.cameraName.Text = "Camera";
-            this.cameraName.Visible = false;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 113);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(68, 13);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Exposure (s):";
-            // 
-            // exposureTextBox
-            // 
-            this.exposureTextBox.Location = new System.Drawing.Point(79, 110);
-            this.exposureTextBox.Name = "exposureTextBox";
-            this.exposureTextBox.Size = new System.Drawing.Size(43, 20);
-            this.exposureTextBox.TabIndex = 23;
-            // 
-            // binningTextBox
-            // 
-            this.binningTextBox.Location = new System.Drawing.Point(224, 110);
-            this.binningTextBox.Name = "binningTextBox";
-            this.binningTextBox.Size = new System.Drawing.Size(43, 20);
-            this.binningTextBox.TabIndex = 25;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(173, 113);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(45, 13);
-            this.label8.TabIndex = 24;
-            this.label8.Text = "Binning:";
-            // 
-            // gainTextBox
-            // 
-            this.gainTextBox.Location = new System.Drawing.Point(351, 113);
-            this.gainTextBox.Name = "gainTextBox";
-            this.gainTextBox.Size = new System.Drawing.Size(43, 20);
-            this.gainTextBox.TabIndex = 27;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(313, 116);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(32, 13);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "Gain:";
-            // 
-            // astapPathTextBox
-            // 
-            this.astapPathTextBox.Location = new System.Drawing.Point(98, 136);
-            this.astapPathTextBox.Name = "astapPathTextBox";
-            this.astapPathTextBox.Size = new System.Drawing.Size(296, 20);
-            this.astapPathTextBox.TabIndex = 29;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(13, 139);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(82, 13);
-            this.label10.TabIndex = 28;
-            this.label10.Text = "Path to ASTAP:";
+            this.progressBar.Location = new System.Drawing.Point(9, 369);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(397, 23);
+            this.progressBar.TabIndex = 30;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(425, 380);
+            this.ClientSize = new System.Drawing.Size(425, 400);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "HomeMade.SkyModel";
@@ -373,7 +382,7 @@ namespace HomeMadeSkyModel
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox numberOfPointTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button generateButton;
         private System.Windows.Forms.TextBox decTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox raTextBox;
@@ -383,11 +392,11 @@ namespace HomeMadeSkyModel
         private System.Windows.Forms.TextBox userLatitudeTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox logTextBox;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button telescopeButton;
+        private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Label actionLabel;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button cameraButton;
         private System.Windows.Forms.Label cameraName;
         private System.Windows.Forms.Label telescopeName;
         private System.Windows.Forms.TextBox binningTextBox;
@@ -398,6 +407,7 @@ namespace HomeMadeSkyModel
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox astapPathTextBox;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 

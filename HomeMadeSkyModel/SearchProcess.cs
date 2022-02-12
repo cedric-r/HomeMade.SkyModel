@@ -19,16 +19,22 @@ namespace HomeMadeSkyModel
         internal static double Ra = 0;
         internal static double Dec = 0;
         internal static string Action = "";
+        internal static double Progress = 0;
         internal static ConcurrentQueue<string> Queue = new ConcurrentQueue<string>();
 
         private static string InputFile = "";
         private static string OutputFile = "";
 
+        private static Telescope Telescope;
+        private static Camera Camera;
+
         private static void StopSearch()
         {
+            Queue.Enqueue("Stopping search");
+            Telescope.AbortSlew();
+            if (Camera.CanAbortExposure) Camera.AbortExposure();
             Stop = false;
             Action = "";
-            Queue.Enqueue("Stopping search");
             try
             {
                 File.Delete(InputFile);
@@ -43,6 +49,10 @@ namespace HomeMadeSkyModel
 
         internal static void Search(double userLatitude, double userLongitude, int numberOfPoints, double minAltitude, double exposure, int binning, int? gain, string pathToASTAP, Telescope telescope, Camera camera)
         {
+            Camera = camera;
+            Telescope = telescope;
+            Progress = 0;
+
             int nbPoint = numberOfPoints;
             double minAlt = minAltitude;
 
@@ -52,10 +62,11 @@ namespace HomeMadeSkyModel
             Queue.Enqueue("Starting search");
             Astro astro = new Astro();
             int frame = 1;
+            double pointNumber = 1;
             foreach (AltAzCoordinates point in points)
             {
                 Queue.Enqueue("Switching off tracking");
-                telescope.Tracking = false;
+                Telescope.Tracking = false;
 
                 if (Stop)
                 {
@@ -72,6 +83,9 @@ namespace HomeMadeSkyModel
                 Dec = coord["DEC"];
 
                 Action = "Moving";
+
+                Queue.Enqueue("Point " + pointNumber + "/" + points.Count);
+                Progress = pointNumber / (double)points.Count * 100;
                 try
                 {
                     if (telescope.CanSlewAltAz)
@@ -120,12 +134,12 @@ namespace HomeMadeSkyModel
                     return;
                 }
 
-                if (binning > camera.MaxBinX || binning > camera.MaxBinY)
+                if (binning > Camera.MaxBinX || binning > Camera.MaxBinY)
                 {
                     Queue.Enqueue("Invalind binning: " + binning);
                     return;
                 }
-                if (exposure > camera.ExposureMax || exposure < camera.ExposureMin)
+                if (exposure > Camera.ExposureMax || exposure < Camera.ExposureMin)
                 {
                     Queue.Enqueue("Invalid exposure time: " + exposure);
                     return;
@@ -138,53 +152,52 @@ namespace HomeMadeSkyModel
                     // Take image
                     Action = "Imaging";
                     Queue.Enqueue("Imaging, attempt " + (plateSolveTries+1));
-                    camera.BinX = (short)binning;
-                    camera.BinY = (short)binning;
+                    Camera.BinX = (short)binning;
+                    Camera.BinY = (short)binning;
                     if (gain != null)
                     {
-                        if (gain.Value > camera.GainMax || gain.Value < camera.GainMin)
+                        if (gain.Value > Camera.GainMax || gain.Value < Camera.GainMin)
                         {
                             Queue.Enqueue("Invalid gain:" + gain.Value);
                             return;
                         }
 
-                        camera.Gain = (short)gain.Value;
+                        Camera.Gain = (short)gain.Value;
                     }
-                    camera.StartExposure(exposure, true);
-                    while (!camera.ImageReady)
+                    Camera.StartExposure(exposure, true);
+                    while (!Camera.ImageReady)
                     {
                         Thread.Sleep(100);
                         if (Stop)
                         {
                             StopSearch();
-                            if (camera.CanAbortExposure) camera.AbortExposure();
                             return;
                         }
                     }
                     Action = "";
                     Action = "Getting image";
-                    int[,] image = (int[,])camera.ImageArray;
+                    int[,] image = (int[,])Camera.ImageArray;
                     Action = "";
                     Action = "Saving image";
                     InputFile = Path.Combine(Path.GetTempPath(), "skymodelframe.fit");
                     Dictionary<string, Tuple<string, string>> additionalParameters = new Dictionary<string, Tuple<string, string>>();
                     additionalParameters.Add("XBINNING", new Tuple<string, string>(binning.ToString(), null));
                     additionalParameters.Add("YBINNING", new Tuple<string, string>(binning.ToString(), null));
-                    additionalParameters.Add("XPIXSZ", new Tuple<string, string>(camera.PixelSizeX.ToString(), null));
-                    additionalParameters.Add("YPIXSZ", new Tuple<string, string>(camera.PixelSizeY.ToString(), null));
+                    additionalParameters.Add("XPIXSZ", new Tuple<string, string>(Camera.PixelSizeX.ToString(), null));
+                    additionalParameters.Add("YPIXSZ", new Tuple<string, string>(Camera.PixelSizeY.ToString(), null));
                     additionalParameters.Add("RA", new Tuple<string, string>(coord["RA"].ToString(), null));
                     additionalParameters.Add("DEC", new Tuple<string, string>(coord["DEC"].ToString(), null));
                     additionalParameters.Add("CENTALT", new Tuple<string, string>(point.Alt.ToString(), null));
                     additionalParameters.Add("CENTAZ", new Tuple<string, string>(point.Az.ToString(), null));
                     additionalParameters.Add("SITELAT", new Tuple<string, string>(userLatitude.ToString(), null));
                     additionalParameters.Add("SITELONG", new Tuple<string, string>(userLongitude.ToString(), null));
-                    FitsImage.SaveFitsFrame(frame, InputFile, camera.NumX, camera.NumY, FitsImage.To1DArray(image), DateTime.Now, (int)exposure, DateTime.Now.ToLongTimeString(), additionalParameters);
+                    additionalParameters.Add("FOCALLEN", new Tuple<string, string>(telescope.FocalLength.ToString(), null));
+                    FitsImage.SaveFitsFrame(frame, InputFile, Camera.NumX, Camera.NumY, FitsImage.To1DArray(image), DateTime.Now, (int)exposure, DateTime.Now.ToLongTimeString(), additionalParameters);
                     Action = "";
 
                     if (Stop)
                     {
                         StopSearch();
-                        if (camera.CanAbortExposure) camera.AbortExposure();
                         return;
                     }
 
@@ -210,7 +223,6 @@ namespace HomeMadeSkyModel
                     if (Stop)
                     {
                         StopSearch();
-                        if (camera.CanAbortExposure) camera.AbortExposure();
                         return;
                     }
 
@@ -232,7 +244,6 @@ namespace HomeMadeSkyModel
                     if (Stop)
                     {
                         StopSearch();
-                        if (camera.CanAbortExposure) camera.AbortExposure();
                         return;
                     }
 
@@ -245,6 +256,7 @@ namespace HomeMadeSkyModel
                     StopSearch();
                     return;
                 }
+                pointNumber++;
             }
         }
 

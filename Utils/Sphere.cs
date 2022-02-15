@@ -53,14 +53,17 @@ namespace Utils
         public static List<AltAzCoordinates> GenerateAltAzPointingCoordinates(int sample, double minAlt)
         {
             List<AltAzCoordinates> temp = new List<AltAzCoordinates>();
+            int slices = (int)Math.Ceiling(Math.Sqrt(sample));
+            int degreesPerSlice = (int)(360.0 / ((double)slices));
+            int pointsPerSlice = (int)Math.Floor(((double)sample) / slices);
+            int step = (int)Math.Floor((90-minAlt)/pointsPerSlice);
 
-            double ratio = Math.Sqrt(sample);
-
-            for(double i = 0; i<360; i += 360 / ratio)
+            // Generate the coordinates in 2 stages to separate the hemispheres into quadrants and avoid a bit of travel
+            for (int i = 0; i < slices; i++)
             {
-                for(double j = minAlt; j<90; j += 90/ratio/2)
+                for (int j = 0; j < pointsPerSlice; j++)
                 {
-                    temp.Add(new AltAzCoordinates() { Alt = j, Az = i });
+                    temp.Add(new AltAzCoordinates() { Alt = minAlt+(j*step), Az = i*degreesPerSlice+(degreesPerSlice/2) });
                 }
             }
 

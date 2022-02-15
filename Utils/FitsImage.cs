@@ -29,20 +29,30 @@ namespace Utils
             return bimg;
         }
 
-        public static void SaveFitsFrame(int frameNo, string fileName, int width, int height, int[] framePixels, DateTime timeStamp, float exposureSeconds)
+        public static void SaveFitsFrame(int frameNo, string fileName, int width, int height, double pixsizex, double pixsizey, int[] framePixels, DateTime timeStamp, float exposureSeconds)
         {
-            SaveFitsFrame(frameNo, fileName, width, height, framePixels, timeStamp, exposureSeconds, timeStamp.ToLongTimeString(), new Dictionary<string, Tuple<string, string>>());
+            SaveFitsFrame(frameNo, fileName, null, null, null, null, width, height, pixsizex, pixsizey, null, framePixels, null, null, null, null, timeStamp, exposureSeconds, new Dictionary<string, Tuple<string, string>>());
         }
 
         public static void SaveFitsFrame(
             int frameNo,
             string fileName,
+            double? lat, 
+            double? lon, 
+            double? elev, 
+            double? focal,
             int width,
             int height,
+            double pixsizex,
+            double pixsizey,
+            int? binning,
             int[] framePixels,
+            double? alt,
+            double? az,
+            double? ra,
+            double? dec,
             DateTime timeStamp,
             float exposureSeconds,
-            string timeStampComment,
             Dictionary<string, Tuple<string, string>> additionalFileHeaders)
         {
             Fits f = new Fits();
@@ -59,13 +69,34 @@ namespace Utils
             hdr.AddValue("BZERO", 32768, null);
             hdr.AddValue("BSCALE", 1, null);
 
+            if (lat != null) hdr.AddValue("SITELAT", lat.Value, "[deg] Observation site latitude");
+            if (lon != null) hdr.AddValue("SITELONG", lon.Value, "[deg] Observation site longitude");
+            if (elev != null) hdr.AddValue("SITEELEV", lon.Value, "[m] Observation site elevation");
+            if (focal != null) hdr.AddValue("FOCALLEN", focal.Value, "[mm] Focal length");
+
+            if (binning != null)
+            {
+                hdr.AddValue("XBINNING", binning.Value, "X axis binning factor");
+                hdr.AddValue("YBINNING", binning.Value, "Y axis binning factor");
+            }
+
+            if (ra != null) hdr.AddValue("RA", ra.Value, "[deg] RA of telescope");
+            if (dec != null) hdr.AddValue("DEC", dec.Value, "[deg] Declination of telescope");
+
+            if (alt != null) hdr.AddValue("CENTALT", alt.Value, "[deg] Altitude of telescope");
+            if (az != null) hdr.AddValue("CENTAZ", az.Value, "[deg] Azimuth of telescope");
+
+            hdr.AddValue("XPIXSZ", pixsizex, "[um] Pixel X axis size");
+            hdr.AddValue("YPIXSZ", pixsizey, "[um] Pixel Y axis size");
+
             hdr.AddValue("NAXIS", 2, null);
             hdr.AddValue("NAXIS1", width, null);
             hdr.AddValue("NAXIS2", height, null);
 
             hdr.AddValue("EXPOSURE", exposureSeconds.ToString("0.000", CultureInfo.InvariantCulture), "Exposure, seconds");
 
-            hdr.AddValue("DATE-OBS", timeStamp.ToString("yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture), timeStampComment);
+            hdr.AddValue("DATE-LOC", timeStamp.ToString("yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture), "Time of observation (local)");
+            hdr.AddValue("DATE-OBS", timeStamp.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture), "Time of observation (UTC)");
 
             hdr.AddValue("FRAMENO", frameNo, null);
 

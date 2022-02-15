@@ -145,8 +145,13 @@ namespace HomeMadeSkyModel
                 MessageBox.Show("Invalid path to ASTAP");
                 return;
             }
-
-            BW = Task.Run(() => { SearchProcess.Search(Double.Parse(userLatitudeTextBox.Text), Double.Parse(userLongitudeTextBox.Text), Int32.Parse(numberOfPointTextBox.Text), Double.Parse(minAltitudeTextBox.Text), Double.Parse(exposureTextBox.Text), Int32.Parse(binningTextBox.Text), gain, astapPathTextBox.Text, telescope, camera); });
+            if (String.IsNullOrEmpty(focalTextBox.Text))
+            {
+                MessageBox.Show("Please provide focal length");
+                return;
+            }
+            SearchProcess.Stop = false;
+            BW = Task.Run(() => { SearchProcess.Search(Double.Parse(userLatitudeTextBox.Text), Double.Parse(userLongitudeTextBox.Text), Int32.Parse(numberOfPointTextBox.Text), Double.Parse(minAltitudeTextBox.Text), Double.Parse(exposureTextBox.Text), Int32.Parse(binningTextBox.Text), Double.Parse(focalTextBox.Text), gain, astapPathTextBox.Text, RandomCheckBox.Checked, telescope, camera); });
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -61,7 +61,11 @@ namespace Utils
                     RA = RA - 360;
             }
             else                        //if moving away from meridian
+            {
                 RA = LMST + HA;
+                if (RA > 360)
+                    RA = RA - 360;
+            }
 
             temp.Add("RA", RA);
             temp.Add("DEC", DEC);

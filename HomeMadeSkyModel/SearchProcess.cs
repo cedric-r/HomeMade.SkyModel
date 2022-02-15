@@ -156,10 +156,8 @@ namespace HomeMadeSkyModel
                         // Take image
                         Action = "Imaging";
                         Queue.Enqueue("Imaging, attempt " + (plateSolveTries + 1));
-                        Queue.Enqueue("Set binX to " + (short)binning);
                         Camera.BinX = (short)binning;
                         Camera.NumX = (int)Camera.CameraXSize / binning;
-                        Queue.Enqueue("Set binY to " + (short)binning);
                         Camera.BinY = (short)binning;
                         Camera.NumY = (int)Camera.CameraYSize / binning;
                         if (gain != null)
@@ -170,10 +168,8 @@ namespace HomeMadeSkyModel
                                 return;
                             }
 
-                            Queue.Enqueue("Set gain to " + (short)gain.Value);
                             Camera.Gain = (short)gain.Value;
                         }
-                        Queue.Enqueue("Exposing for " + exposure);
                         Camera.StartExposure(exposure, true);
                         while (!Camera.ImageReady)
                         {

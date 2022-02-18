@@ -29,22 +29,22 @@ namespace Utils
             // Generate the coordinates in 2 stages to separate the hemispheres into quadrants and avoid a bit of travel
             for (int i = 0; i < sample/4; i++)
             {
-                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(0, 90) });
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 89), Az = rnd.Next(0, 90) });
             }
 
             for (int i = 0; i < sample / 4; i++)
             {
-                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(91, 180) });
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 89), Az = rnd.Next(91, 180) });
             }
 
             for (int i = 0; i < sample/4; i++)
             {
-                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(181, 270) });
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 89), Az = rnd.Next(181, 270) });
             }
 
             for (int i = 0; i < sample / 4; i++)
             {
-                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 90), Az = rnd.Next(271, 360) });
+                temp.Add(new AltAzCoordinates() { Alt = rnd.Next((int)Math.Ceiling(minAlt), 89), Az = rnd.Next(271, 360) });
             }
 
             return temp;
@@ -56,9 +56,8 @@ namespace Utils
             int slices = (int)Math.Ceiling(Math.Sqrt(sample));
             int degreesPerSlice = (int)(360.0 / ((double)slices));
             int pointsPerSlice = (int)Math.Floor(((double)sample) / slices);
-            int step = (int)Math.Floor((90-minAlt)/pointsPerSlice);
+            int step = (int)Math.Floor((89-minAlt)/pointsPerSlice);
 
-            // Generate the coordinates in 2 stages to separate the hemispheres into quadrants and avoid a bit of travel
             for (int i = 0; i < slices; i++)
             {
                 for (int j = 0; j < pointsPerSlice; j++)

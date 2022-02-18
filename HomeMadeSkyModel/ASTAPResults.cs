@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,7 +47,7 @@ namespace HomeMadeSkyModel
             string val = SearchKey("CRVAL1");
             try
             {
-                temp = Double.Parse(val);
+                temp = Double.Parse(val.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator));
             }
             catch(Exception e)
             {
@@ -61,7 +62,7 @@ namespace HomeMadeSkyModel
             string val = SearchKey("CRVAL2");
             try
             {
-                temp = Double.Parse(val);
+                temp = Double.Parse(val.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator));
             }
             catch (Exception e)
             {

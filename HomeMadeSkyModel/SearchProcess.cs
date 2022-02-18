@@ -66,6 +66,7 @@ namespace HomeMadeSkyModel
                 Queue.Enqueue("Starting search");
                 Astro astro = new Astro();
                 int frame = 1;
+                int successfulSync = 0;
                 double pointNumber = 1;
                 foreach (AltAzCoordinates point in points)
                 {
@@ -230,13 +231,21 @@ namespace HomeMadeSkyModel
                         }
                         else
                         {
+                            successfulSync++;
                             Action = "Syncing telescope";
                             Queue.Enqueue("Syncing telescope");
                             plateSolveOk = true;
                             double actualRa = plateSolve.Ra();
                             double actualDec = plateSolve.Dec();
                             Queue.Enqueue("Syncing " + coord["RA"] + "/" + coord["DEC"] + " to " + actualRa + "/" + actualDec);
-                            telescope.SyncToCoordinates(astro.ToHours(actualRa), actualDec);
+                            try
+                            {
+                                telescope.SyncToCoordinates(astro.ToHours(actualRa), actualDec);
+                            }
+                            catch(Exception e2)
+                            {
+                                Queue.Enqueue("Telescope sync refused, ignoring.");
+                            }
                         }
                         if (Stop)
                         {
@@ -255,6 +264,8 @@ namespace HomeMadeSkyModel
                     }
                     pointNumber++;
                 }
+                StopSearch();
+                Queue.Enqueue(successfulSync+" successful syncs out of "+points.Count());
             }
             catch(Exception e)
             {

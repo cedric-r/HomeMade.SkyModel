@@ -31,6 +31,8 @@ namespace HomeMadeSkyModel
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.focalTextBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.RandomCheckBox = new System.Windows.Forms.CheckBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.astapPathTextBox = new System.Windows.Forms.TextBox();
@@ -62,13 +64,13 @@ namespace HomeMadeSkyModel
             this.label1 = new System.Windows.Forms.Label();
             this.generateButton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.focalTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.minAltitudeTextBox);
             this.panel1.Controls.Add(this.focalTextBox);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.RandomCheckBox);
@@ -96,22 +98,39 @@ namespace HomeMadeSkyModel
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.raTextBox);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.minAltitudeTextBox);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.numberOfPointTextBox);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.generateButton);
             this.panel1.Location = new System.Drawing.Point(4, 2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(561, 487);
+            this.panel1.Size = new System.Drawing.Size(569, 496);
             this.panel1.TabIndex = 0;
+            // 
+            // focalTextBox
+            // 
+            this.focalTextBox.Location = new System.Drawing.Point(468, 139);
+            this.focalTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.focalTextBox.Name = "focalTextBox";
+            this.focalTextBox.Size = new System.Drawing.Size(56, 22);
+            this.focalTextBox.TabIndex = 33;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(414, 142);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(46, 17);
+            this.label11.TabIndex = 32;
+            this.label11.Text = "Focal:";
             // 
             // RandomCheckBox
             // 
             this.RandomCheckBox.AutoSize = true;
             this.RandomCheckBox.Location = new System.Drawing.Point(21, 204);
-            this.RandomCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RandomCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.RandomCheckBox.Name = "RandomCheckBox";
             this.RandomCheckBox.Size = new System.Drawing.Size(156, 21);
             this.RandomCheckBox.TabIndex = 31;
@@ -121,7 +140,7 @@ namespace HomeMadeSkyModel
             // progressBar
             // 
             this.progressBar.Location = new System.Drawing.Point(12, 454);
-            this.progressBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(4);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(529, 28);
             this.progressBar.TabIndex = 30;
@@ -129,7 +148,7 @@ namespace HomeMadeSkyModel
             // astapPathTextBox
             // 
             this.astapPathTextBox.Location = new System.Drawing.Point(131, 167);
-            this.astapPathTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.astapPathTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.astapPathTextBox.Name = "astapPathTextBox";
             this.astapPathTextBox.Size = new System.Drawing.Size(393, 22);
             this.astapPathTextBox.TabIndex = 29;
@@ -147,7 +166,7 @@ namespace HomeMadeSkyModel
             // gainTextBox
             // 
             this.gainTextBox.Location = new System.Drawing.Point(344, 139);
-            this.gainTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gainTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.gainTextBox.Name = "gainTextBox";
             this.gainTextBox.Size = new System.Drawing.Size(56, 22);
             this.gainTextBox.TabIndex = 27;
@@ -165,7 +184,7 @@ namespace HomeMadeSkyModel
             // binningTextBox
             // 
             this.binningTextBox.Location = new System.Drawing.Point(230, 139);
-            this.binningTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.binningTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.binningTextBox.Name = "binningTextBox";
             this.binningTextBox.Size = new System.Drawing.Size(56, 22);
             this.binningTextBox.TabIndex = 25;
@@ -183,7 +202,7 @@ namespace HomeMadeSkyModel
             // exposureTextBox
             // 
             this.exposureTextBox.Location = new System.Drawing.Point(105, 139);
-            this.exposureTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.exposureTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.exposureTextBox.Name = "exposureTextBox";
             this.exposureTextBox.Size = new System.Drawing.Size(56, 22);
             this.exposureTextBox.TabIndex = 23;
@@ -223,7 +242,7 @@ namespace HomeMadeSkyModel
             // cameraButton
             // 
             this.cameraButton.Location = new System.Drawing.Point(19, 96);
-            this.cameraButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cameraButton.Margin = new System.Windows.Forms.Padding(4);
             this.cameraButton.Name = "cameraButton";
             this.cameraButton.Size = new System.Drawing.Size(100, 28);
             this.cameraButton.TabIndex = 19;
@@ -248,7 +267,7 @@ namespace HomeMadeSkyModel
             // 
             this.userLongitudeTextBox.Enabled = false;
             this.userLongitudeTextBox.Location = new System.Drawing.Point(392, 235);
-            this.userLongitudeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.userLongitudeTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.userLongitudeTextBox.Name = "userLongitudeTextBox";
             this.userLongitudeTextBox.Size = new System.Drawing.Size(132, 22);
             this.userLongitudeTextBox.TabIndex = 14;
@@ -258,7 +277,7 @@ namespace HomeMadeSkyModel
             this.stopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stopButton.ForeColor = System.Drawing.Color.Red;
             this.stopButton.Location = new System.Drawing.Point(425, 199);
-            this.stopButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.stopButton.Margin = new System.Windows.Forms.Padding(4);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(100, 28);
             this.stopButton.TabIndex = 17;
@@ -269,7 +288,7 @@ namespace HomeMadeSkyModel
             // telescopeButton
             // 
             this.telescopeButton.Location = new System.Drawing.Point(19, 60);
-            this.telescopeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.telescopeButton.Margin = new System.Windows.Forms.Padding(4);
             this.telescopeButton.Name = "telescopeButton";
             this.telescopeButton.Size = new System.Drawing.Size(100, 28);
             this.telescopeButton.TabIndex = 16;
@@ -280,7 +299,7 @@ namespace HomeMadeSkyModel
             // logTextBox
             // 
             this.logTextBox.Location = new System.Drawing.Point(12, 300);
-            this.logTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.logTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.logTextBox.Multiline = true;
             this.logTextBox.Name = "logTextBox";
             this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -301,7 +320,7 @@ namespace HomeMadeSkyModel
             // 
             this.userLatitudeTextBox.Enabled = false;
             this.userLatitudeTextBox.Location = new System.Drawing.Point(105, 235);
-            this.userLatitudeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.userLatitudeTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.userLatitudeTextBox.Name = "userLatitudeTextBox";
             this.userLatitudeTextBox.Size = new System.Drawing.Size(132, 22);
             this.userLatitudeTextBox.TabIndex = 12;
@@ -320,7 +339,7 @@ namespace HomeMadeSkyModel
             // 
             this.decTextBox.Enabled = false;
             this.decTextBox.Location = new System.Drawing.Point(247, 268);
-            this.decTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.decTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.decTextBox.Name = "decTextBox";
             this.decTextBox.Size = new System.Drawing.Size(132, 22);
             this.decTextBox.TabIndex = 10;
@@ -339,7 +358,7 @@ namespace HomeMadeSkyModel
             // 
             this.raTextBox.Enabled = false;
             this.raTextBox.Location = new System.Drawing.Point(57, 268);
-            this.raTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.raTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.raTextBox.Name = "raTextBox";
             this.raTextBox.Size = new System.Drawing.Size(132, 22);
             this.raTextBox.TabIndex = 8;
@@ -357,7 +376,7 @@ namespace HomeMadeSkyModel
             // minAltitudeTextBox
             // 
             this.minAltitudeTextBox.Location = new System.Drawing.Point(320, 14);
-            this.minAltitudeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.minAltitudeTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.minAltitudeTextBox.Name = "minAltitudeTextBox";
             this.minAltitudeTextBox.Size = new System.Drawing.Size(63, 22);
             this.minAltitudeTextBox.TabIndex = 4;
@@ -375,7 +394,7 @@ namespace HomeMadeSkyModel
             // numberOfPointTextBox
             // 
             this.numberOfPointTextBox.Location = new System.Drawing.Point(143, 14);
-            this.numberOfPointTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numberOfPointTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.numberOfPointTextBox.Name = "numberOfPointTextBox";
             this.numberOfPointTextBox.Size = new System.Drawing.Size(59, 22);
             this.numberOfPointTextBox.TabIndex = 2;
@@ -393,7 +412,7 @@ namespace HomeMadeSkyModel
             // generateButton
             // 
             this.generateButton.Location = new System.Drawing.Point(317, 199);
-            this.generateButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.generateButton.Margin = new System.Windows.Forms.Padding(4);
             this.generateButton.Name = "generateButton";
             this.generateButton.Size = new System.Drawing.Size(100, 28);
             this.generateButton.TabIndex = 0;
@@ -406,33 +425,16 @@ namespace HomeMadeSkyModel
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // focalTextBox
-            // 
-            this.focalTextBox.Location = new System.Drawing.Point(468, 139);
-            this.focalTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.focalTextBox.Name = "focalTextBox";
-            this.focalTextBox.Size = new System.Drawing.Size(56, 22);
-            this.focalTextBox.TabIndex = 33;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(414, 142);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(46, 17);
-            this.label11.TabIndex = 32;
-            this.label11.Text = "Focal:";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(567, 492);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "HomeMade.SkyModel";
+            this.Text = "HomeMade.SkyModel (c) Cedric Raguenaud";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);

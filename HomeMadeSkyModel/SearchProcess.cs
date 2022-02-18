@@ -47,7 +47,7 @@ namespace HomeMadeSkyModel
             catch (Exception) { }
         }
 
-        internal static void Search(double userLatitude, double userLongitude, int numberOfPoints, double minAltitude, double exposure, int binning, double focal, int? gain, string pathToASTAP, bool randomDistribution, Telescope telescope, Camera camera)
+        internal static void Search(AppConfig appConfig, Telescope telescope, Camera camera)
         {
             try
             {
@@ -55,12 +55,12 @@ namespace HomeMadeSkyModel
                 Telescope = telescope;
                 Progress = 0;
 
-                int nbPoint = numberOfPoints;
-                double minAlt = minAltitude;
+                int nbPoint = appConfig.numberOfPoints;
+                double minAlt = appConfig.minAltitude;
 
                 Queue.Enqueue("Generating points");
                 List<AltAzCoordinates> points;
-                if (randomDistribution) points = Sphere.GenerateRandomAltAzPointingCoordinates(nbPoint, minAlt);
+                if (appConfig.randomDistribution) points = Sphere.GenerateRandomAltAzPointingCoordinates(nbPoint, minAlt);
                 else points = Sphere.GenerateAltAzPointingCoordinates(nbPoint, minAlt);
 
                 Queue.Enqueue("Starting search");
@@ -81,9 +81,9 @@ namespace HomeMadeSkyModel
                     Alt = point.Alt;
                     Az = point.Az;
 
-                    double LMST = astro.GMST(DateTime.UtcNow) + userLongitude;
+                    double LMST = astro.GMST(DateTime.UtcNow) + appConfig.userLongitude;
 
-                    Dictionary<string, double> coord = astro.AZALT2RADEC(LMST, point.Az, point.Alt, userLatitude);
+                    Dictionary<string, double> coord = astro.AZALT2RADEC(LMST, point.Az, point.Alt, appConfig.userLatitude);
                     Ra = astro.ToHours(coord["RA"]);
                     Dec = coord["DEC"];
 
@@ -139,14 +139,14 @@ namespace HomeMadeSkyModel
                         return;
                     }
 
-                    if (binning > Camera.MaxBinX || binning > Camera.MaxBinY)
+                    if (appConfig.binning > Camera.MaxBinX || appConfig.binning > Camera.MaxBinY)
                     {
-                        Queue.Enqueue("Invalind binning: " + binning);
+                        Queue.Enqueue("Invalind binning: " + appConfig.binning);
                         return;
                     }
-                    if (exposure > Camera.ExposureMax || exposure < Camera.ExposureMin)
+                    if (appConfig.exposure > Camera.ExposureMax || appConfig.exposure < Camera.ExposureMin)
                     {
-                        Queue.Enqueue("Invalid exposure time: " + exposure);
+                        Queue.Enqueue("Invalid exposure time: " + appConfig.exposure);
                         return;
                     }
 
@@ -157,21 +157,21 @@ namespace HomeMadeSkyModel
                         // Take image
                         Action = "Imaging";
                         Queue.Enqueue("Imaging, attempt " + (plateSolveTries + 1));
-                        Camera.BinX = (short)binning;
-                        Camera.NumX = (int)Camera.CameraXSize / binning;
-                        Camera.BinY = (short)binning;
-                        Camera.NumY = (int)Camera.CameraYSize / binning;
-                        if (gain != null)
+                        Camera.BinX = (short)appConfig.binning;
+                        Camera.NumX = (int)Camera.CameraXSize / appConfig.binning;
+                        Camera.BinY = (short)appConfig.binning;
+                        Camera.NumY = (int)Camera.CameraYSize / appConfig.binning;
+                        if (appConfig.gain != null)
                         {
-                            if (gain.Value > Camera.GainMax || gain.Value < Camera.GainMin)
+                            if (appConfig.gain.Value > Camera.GainMax || appConfig.gain.Value < Camera.GainMin)
                             {
-                                Queue.Enqueue("Invalid gain:" + gain.Value);
+                                Queue.Enqueue("Invalid gain:" + appConfig.gain.Value);
                                 return;
                             }
 
-                            Camera.Gain = (short)gain.Value;
+                            Camera.Gain = (short)appConfig.gain.Value;
                         }
-                        Camera.StartExposure(exposure, true);
+                        Camera.StartExposure(appConfig.exposure, true);
                         while (!Camera.ImageReady)
                         {
                             Thread.Sleep(100);
@@ -189,7 +189,7 @@ namespace HomeMadeSkyModel
                         InputFile = Path.Combine(Path.GetTempPath(), "skymodelframe.fit");
                         Dictionary<string, Tuple<string, string>> additionalParameters = new Dictionary<string, Tuple<string, string>>();
                         Queue.Enqueue("Saving to " + InputFile);
-                        FitsImage.SaveFitsFrame(frame, InputFile, userLatitude, userLongitude, telescope.SiteElevation, focal, Camera.NumX, Camera.NumY, Camera.PixelSizeX, Camera.PixelSizeY, binning, FitsImage.To1DArray(image), point.Alt, point.Az, coord["RA"], coord["DEC"], DateTime.Now, (int)exposure, additionalParameters);
+                        FitsImage.SaveFitsFrame(frame, InputFile, appConfig.userLatitude, appConfig.userLongitude, telescope.SiteElevation, appConfig.focal, Camera.NumX, Camera.NumY, Camera.PixelSizeX, Camera.PixelSizeY, appConfig.binning, FitsImage.To1DArray(image), point.Alt, point.Az, coord["RA"], coord["DEC"], DateTime.Now, (int)appConfig.exposure, additionalParameters);
                         Action = "";
 
                         if (Stop)
@@ -201,11 +201,11 @@ namespace HomeMadeSkyModel
                         Action = "Plate solving";
                         Queue.Enqueue("Plate solving");
                         OutputFile = Path.Combine(Path.GetTempPath(), "astap.ini");
-                        double resolution = 206.2648 * Camera.PixelSizeX / focal; // Assumes square pixels
+                        double resolution = 206.2648 * Camera.PixelSizeX / appConfig.focal; // Assumes square pixels
                         string arguments = "-f " + InputFile + " -r 90 -fov 0 -m " + (resolution * 3) + " -z 0 -o " + OutputFile;
                         using (System.Diagnostics.Process pProcess = new System.Diagnostics.Process())
                         {
-                            pProcess.StartInfo.FileName = pathToASTAP;
+                            pProcess.StartInfo.FileName = appConfig.pathToASTAP;
                             pProcess.StartInfo.Arguments = arguments; //argument
                             pProcess.StartInfo.UseShellExecute = false;
                             pProcess.StartInfo.RedirectStandardOutput = true;

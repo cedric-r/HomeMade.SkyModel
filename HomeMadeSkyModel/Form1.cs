@@ -1,10 +1,12 @@
 ﻿using ASCOM.DriverAccess;
+using Newtonsoft.Json;
 using SGPClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,6 +21,7 @@ namespace HomeMadeSkyModel
         private Telescope telescope = null;
         private Camera camera = null;
         private bool Stop = false;
+        private AppConfig appConfig;
         internal Task BW = null;
 
         public Form1()
@@ -30,6 +33,31 @@ namespace HomeMadeSkyModel
         {
             numberOfPointTextBox.Text = "20";
             minAltitudeTextBox.Text = "30";
+
+            string strPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+            strPath = Path.Combine(strPath, "HomeMade.SkyModel");
+            try
+            {
+                appConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(Path.Combine(strPath, "HomeMade.SkyModel.Config")));
+                binningTextBox.Text = appConfig.binning.ToString();
+                exposureTextBox.Text = appConfig.exposure.ToString();
+                focalTextBox.Text = appConfig.focal.ToString();
+                gainTextBox.Text = appConfig.gain.ToString();
+                minAltitudeTextBox.Text = appConfig.minAltitude.ToString();
+                numberOfPointTextBox.Text = appConfig.numberOfPoints.ToString();
+                astapPathTextBox.Text = appConfig.pathToASTAP.ToString();
+                RandomCheckBox.Checked = appConfig.randomDistribution;
+                userLatitudeTextBox.Text = appConfig.userLatitude.ToString();
+                userLongitudeTextBox.Text = appConfig.userLongitude.ToString();
+
+                if (!String.IsNullOrEmpty(appConfig.telescope)) ConnectTelescope(appConfig.telescope);
+                if (!String.IsNullOrEmpty(appConfig.camera)) ConnectCamera(appConfig.camera);
+            }
+            catch (Exception)
+            {
+                // There might be no config.
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -151,12 +179,35 @@ namespace HomeMadeSkyModel
                 return;
             }
             SearchProcess.Stop = false;
-            BW = Task.Run(() => { SearchProcess.Search(Double.Parse(userLatitudeTextBox.Text), Double.Parse(userLongitudeTextBox.Text), Int32.Parse(numberOfPointTextBox.Text), Double.Parse(minAltitudeTextBox.Text), Double.Parse(exposureTextBox.Text), Int32.Parse(binningTextBox.Text), Double.Parse(focalTextBox.Text), gain, astapPathTextBox.Text, RandomCheckBox.Checked, telescope, camera); });
+            appConfig = new AppConfig();
+            appConfig.binning = Int32.Parse(binningTextBox.Text);
+            appConfig.camera = cameraName.Text;
+            appConfig.exposure = Double.Parse(exposureTextBox.Text);
+            appConfig.focal = Double.Parse(focalTextBox.Text);
+            appConfig.gain = gain;
+            appConfig.minAltitude = Double.Parse(minAltitudeTextBox.Text);
+            appConfig.numberOfPoints = Int32.Parse(numberOfPointTextBox.Text);
+            appConfig.pathToASTAP = astapPathTextBox.Text;
+            appConfig.randomDistribution = RandomCheckBox.Checked;
+            appConfig.telescope = telescopeName.Text;
+            appConfig.userLatitude = Double.Parse(userLatitudeTextBox.Text);
+            appConfig.userLongitude = Double.Parse(userLongitudeTextBox.Text);
+            string strPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+            strPath = Path.Combine(strPath, "HomeMade.SkyModel");
+            try
+            {
+                System.IO.Directory.CreateDirectory(strPath);
+                File.WriteAllText(Path.Combine(strPath, "HomeMade.SkyModel.Config"), JsonConvert.SerializeObject(appConfig));
+            }
+            catch (Exception) {
+                MessageBox.Show("Error saving config");
+            }
+
+            BW = Task.Run(() => { SearchProcess.Search(appConfig, telescope, camera); });
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void ConnectTelescope(string telescopeId)
         {
-            string telescopeId = Telescope.Choose("");
             telescope = new Telescope(telescopeId);
             telescopeName.Text = telescopeId;
             telescopeName.Visible = true;
@@ -176,9 +227,15 @@ namespace HomeMadeSkyModel
             userLatitudeTextBox.Text = telescope.SiteLatitude.ToString();
             userLongitudeTextBox.Text = telescope.SiteLongitude.ToString();
         }
-        private void button4_Click(object sender, EventArgs e)
+
+        private void button2_Click(object sender, EventArgs e)
         {
-            string cameraId = Camera.Choose("");
+            string telescopeId = Telescope.Choose("");
+            ConnectTelescope(telescopeId);
+        }
+
+        private void ConnectCamera(string cameraId)
+        {
             camera = new Camera(cameraId);
             cameraName.Text = cameraId;
             cameraName.Visible = true;
@@ -191,6 +248,12 @@ namespace HomeMadeSkyModel
                 MessageBox.Show("Error connecting the camera: " + eCamera.Message);
                 return;
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string cameraId = Camera.Choose("");
+            ConnectCamera(cameraId);
         }
 
         private void button3_Click(object sender, EventArgs e)

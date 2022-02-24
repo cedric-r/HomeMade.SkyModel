@@ -60,7 +60,6 @@ Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\CSharpFITS_v1.1.dl
 Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\HomeMadeSkyModel.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\Newtonsoft.Json.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\SGPClient.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\Utils.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

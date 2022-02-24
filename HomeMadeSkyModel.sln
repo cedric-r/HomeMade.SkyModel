@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeMadeSkyModel", "HomeMadeSkyModel\HomeMadeSkyModel.csproj", "{80D86FA2-FDFD-4A6E-BAFC-A21D92A80CA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGPClient", "SGPClient\SGPClient.csproj", "{D9C8009A-8064-401C-9C2F-4E250E9B941A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{DAFD8A17-AE03-4CFF-96F3-834040F884FB}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{80D86FA2-FDFD-4A6E-BAFC-A21D92A80CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80D86FA2-FDFD-4A6E-BAFC-A21D92A80CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80D86FA2-FDFD-4A6E-BAFC-A21D92A80CA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9C8009A-8064-401C-9C2F-4E250E9B941A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9C8009A-8064-401C-9C2F-4E250E9B941A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9C8009A-8064-401C-9C2F-4E250E9B941A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9C8009A-8064-401C-9C2F-4E250E9B941A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAFD8A17-AE03-4CFF-96F3-834040F884FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAFD8A17-AE03-4CFF-96F3-834040F884FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAFD8A17-AE03-4CFF-96F3-834040F884FB}.Release|Any CPU.ActiveCfg = Release|Any CPU

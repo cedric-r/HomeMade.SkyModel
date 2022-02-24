@@ -1,6 +1,5 @@
 ﻿using ASCOM.DriverAccess;
 using Newtonsoft.Json;
-using SGPClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

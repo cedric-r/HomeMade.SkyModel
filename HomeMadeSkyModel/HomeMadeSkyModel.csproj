@@ -120,10 +120,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SGPClient\SGPClient.csproj">
-      <Project>{D9C8009A-8064-401C-9C2F-4E250E9B941A}</Project>
-      <Name>SGPClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{DAFD8A17-AE03-4CFF-96F3-834040F884FB}</Project>
       <Name>Utils</Name>

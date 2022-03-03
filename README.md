@@ -5,4 +5,6 @@ Sky model builder allows the creation of sky models in ASCOM mounts with large n
 
 It connects directly to ASCOM mounts and ASCOM cameras and builds the model via sync (the mount and the driver need to understand it). For example, for EQMOD, setting the behaviour of sync to "add to the list" will build a model. Then select "load model at unpark" to load the model every time the telescope is started. Something similar can be done with Gemini mounts.
 
+It uses ASTAP for plate solving.
+
 ![Screenshot](Screenshot.jpg)

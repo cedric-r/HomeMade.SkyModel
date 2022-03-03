@@ -8,3 +8,5 @@ It connects directly to ASCOM mounts and ASCOM cameras and builds the model via 
 It uses ASTAP for plate solving.
 
 ![Screenshot](Screenshot.jpg)
+
+![Screenshot](sky model.png)

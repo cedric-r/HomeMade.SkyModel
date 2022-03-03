@@ -9,4 +9,4 @@ It uses ASTAP for plate solving.
 
 ![Screenshot](Screenshot.jpg)
 
-![Screenshot](sky model.png)
+![Screenshot](sky%20model.png)

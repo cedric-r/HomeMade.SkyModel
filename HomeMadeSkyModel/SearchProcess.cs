@@ -202,7 +202,8 @@ namespace HomeMadeSkyModel
                         Queue.Enqueue("Plate solving");
                         OutputFile = Path.Combine(Path.GetTempPath(), "astap.ini");
                         double resolution = 206.2648 * Camera.PixelSizeX / appConfig.focal; // Assumes square pixels
-                        string arguments = "-f " + InputFile + " -r 90 -fov 0 -m " + (resolution * 3) + " -z 0 -o " + OutputFile;
+                        //string arguments = "-f " + InputFile + " -r 90 -fov 0 -m " + (resolution * 3) + " -z 0 -o " + OutputFile;
+                        string arguments = "-f " + InputFile + " -r 90 -fov 0 -z 0 -o " + OutputFile;
                         using (System.Diagnostics.Process pProcess = new System.Diagnostics.Process())
                         {
                             pProcess.StartInfo.FileName = appConfig.pathToASTAP;

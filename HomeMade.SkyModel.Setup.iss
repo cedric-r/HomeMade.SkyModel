@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HomeMade.SkyModel"
-#define MyAppVersion "0.0.18"
+#define MyAppVersion "0.0.19"
 #define MyAppPublisher "Cedric Raguenaud"
 #define MyAppURL "https://github.com/cedric-r/HomeMade.SkyModel"
 #define MyAppExeName "HomeMadeSkyModel.exe"
@@ -61,6 +61,7 @@ Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\HomeMadeSkyModel.e
 Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\Newtonsoft.Json.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "K:\astro\HomeMadeSkyModel\HomeMadeSkyModel\bin\Debug\Utils.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "k:\astro\HomeMadeSkyModel\HomeMadeSkyModel\application.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

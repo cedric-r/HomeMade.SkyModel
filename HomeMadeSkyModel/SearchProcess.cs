@@ -13,6 +13,8 @@ namespace HomeMadeSkyModel
 {
     internal static class SearchProcess
     {
+        private static int MAXPLATESOLVE = 3;
+        
         internal static bool Stop = false;
         internal static double Alt = 0;
         internal static double Az = 0;
@@ -152,7 +154,7 @@ namespace HomeMadeSkyModel
 
                     bool plateSolveOk = false;
                     int plateSolveTries = 0;
-                    while (!plateSolveOk && plateSolveTries < 3)
+                    while (!plateSolveOk && plateSolveTries < MAXPLATESOLVE)
                     {
                         // Take image
                         Action = "Imaging";
@@ -257,11 +259,11 @@ namespace HomeMadeSkyModel
                         Action = "";
                         frame++;
                     }
-                    if (plateSolveTries == 5)
+                    if (plateSolveTries == MAXPLATESOLVE)
                     {
-                        Queue.Enqueue("Unable to plate solve");
-                        StopSearch();
-                        return;
+                        Queue.Enqueue("Unable to plate solve. Giving up on that point");
+                        //StopSearch();
+                        //return;
                     }
                     pointNumber++;
                 }
